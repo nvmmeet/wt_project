@@ -1,38 +1,37 @@
-<?php 
-  include "includes/config.php";
-  include "includes/sessions/true.php";
+<?php
+include "includes/config.php";
+include "includes/sessions/true.php";
 
-  $database = new Database();
-  $pdo = $database->open();
+$database = new Database();
+$pdo = $database->open();
 
-  $error = "";
-  if($_SERVER["REQUEST_METHOD"] == "POST"){
-    $username = $_POST["username"];
-    $password = $_POST["password"];
+$error = "";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $username = $_POST["username"];
+  $password = $_POST["password"];
 
   if (empty($username) || empty($password)) {
     $error = "Fields should not Be empty!";
   }
 
-  if(empty($error)) {
+  if (empty($error)) {
     $query = $pdo->prepare("SELECT password FROM users WHERE username = :username");
-        $query->execute(["username" => $username]);
-        $user = $query->fetch();
+    $query->execute(["username" => $username]);
+    $user = $query->fetch();
 
-        if (!$user) {
-            $error = "User Doesn't Exist!";
-        } else {
-            if (!password_verify($password, $user['password'])) {
-                $error = "Credentials doesn't Match!";
-            } else {
-                $_SESSION['username'] = $username; 
-                header("Location: index.php"); 
-                exit();
-            }
-        }
+    if (!$user) {
+      $error = "User Doesn't Exist!";
+    } else {
+      if (!password_verify($password, $user['password'])) {
+        $error = "Credentials doesn't Match!";
+      } else {
+        $_SESSION['username'] = $username;
+        header("Location: index.php");
+        exit();
+      }
+    }
   }
-
-  }
+}
 
 ?>
 
@@ -49,18 +48,18 @@
 
 <body>
   <div class="form-container center">
-    <form action="login.php" method="post" onsubmit="return validateLogin(event);" name="login" >
+    <form action="login.php" method="post" onsubmit="return validateLogin(event);" name="login">
       <h1 class="form-heading">Login</h1>
       <div class="form-field">
-        <input type="text" placeholder="Username..." name="username"/>
+        <input type="text" placeholder="Username..." name="username" />
         <i class="bi bi-person"></i>
       </div>
       <div class="form-field">
         <i class="bi bi-eye show-pass" onclick="showPass()"></i>
-        <input type="password" placeholder="password..." name="password" id="pass"/>
+        <input type="password" placeholder="password..." name="password" id="pass" />
         <i class="bi bi-lock"></i>
       </div>
-      <div class="error-field password"><?= $error ?? ""?></div>
+      <div class="error-field password"><?= $error ?? "" ?></div>
       <button type="submit">Submit</button>
       <div class="form-link">
         Don't Have an Account? <a href="signup.php">Sign Up</a>
