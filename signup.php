@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <input type="text" placeholder="Username..." name="username" />
         <i class="bi bi-lock"></i>
       </div>
-      <div class="error-field username"><?= $usernameError ?? '' ?></div>
+      <div class="error-field username"> <?= $usernameError ?? '' ?></div>
       <div class="form-field">
         <i class="bi bi-eye show-pass" onclick="showPass()"></i>
         <input type="password" placeholder="Password..." name="password" id="pass" />
