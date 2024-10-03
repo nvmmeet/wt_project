@@ -1,4 +1,9 @@
-<?php include "includes/sessions/false.php"; ?>
+<?php
+include "includes/sessions/false.php";
+include "includes/config.php";
+$database = new Database();
+$pdo = $database->open();
+?>
 
 <html>
 

@@ -1,77 +1,73 @@
 .breadcrumb {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.breadcrumb a{
-    text-decoration: none;
+.breadcrumb a {
+  text-decoration: none;
 }
 
 .breadcrumb i {
-    font-size: 20px;
-    height: 50px;
-    width: 75px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: white;
-    border-radius: 10px;
-    color: #4e4e4e;
+  font-size: 20px;
+  height: 50px;
+  width: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-radius: 10px;
+  color: #4e4e4e;
 }
 
-.profile-main{
-    display: flex;
-    align-items: center;
-    margin-top: 25px;
-    background: rgba(0,0,0,0.25);
-    padding: 25px;
-    border-radius: 10px;
-    gap: 50px;
+.profile-main {
+  display: flex;
+  align-items: center;
+  margin-top: 25px;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 25px;
+  border-radius: 10px;
+  gap: 50px;
 }
-
-
 
 .profile-main img {
-    max-width: 250px;
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-    border-radius: 50%;
+  max-width: 250px;
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .profile-details {
-    height: 100%;
-    display: grid;
+  height: 100%;
+  display: grid;
 }
 
 .profile-details .username,
 .profile-details .name,
-.profile-details .email{
-    font-size: 22px;
-    color: white;
+.profile-details .dob {
+  font-size: 22px;
+  color: white;
+  margin: 5px;
 }
 
-.profile-details .email span,
+.profile-details .dob span,
 .profile-details .username span,
-.profile-details .name span{
-    color: rgb(17,114,241);
+.profile-details .name span {
+  color: rgb(17, 114, 241);
 }
 
-.profile-details .email{
-    margin-bottom: 10px;
+.profile-details .profile-follow {
+  display: flex;
+  gap: 5px;
+  color: lightgray;
 }
 
-.profile-details .profile-follow{
-    display: flex;
-    gap: 5px;
-    color: lightgray;
+.profile-main a,
+.profile-main .row {
+  color: rgb(17, 114, 241);
 }
 
-.profile-main .row{
-    color: rgb(17,114,241);
-}
-
-.profile-main .row span{
-    color: whitesmoke;
+.profile-main .row span {
+  color: whitesmoke;
 }

@@ -1,20 +1,24 @@
 <?php
-  include "includes/config.php";
-  include "includes/sessions/false.php";
+include "includes/config.php";
+include "includes/sessions/false.php";
 
-  $database = new Database();
-  $pdo = $database->open();
-  $username = $_SESSION["username"];
-  $query = $pdo->prepare("SELECT name,dob FROM users WHERE username = :username");
-  $query->execute(["username" => $username]);
-  $user = $query->fetch();
-  $database->close();
-  
-  if ($user["dob"] === '0000-00-00' || $user["dob"] === null) {
-    $formattedDob = "Date not set"; 
-  } else {
-      $formattedDob = date('d-m-Y', strtotime($user["dob"]));
-  }
+$username = $_SESSION["username"];
+$query = $pdo->prepare("SELECT name,profile_pic_url,dob FROM users WHERE username = :username");
+$query->execute(["username" => $username]);
+$user = $query->fetch();
+$database->close();
+
+if ($user["dob"] === '0000-00-00' || $user["dob"] === null) {
+  $formattedDob = "Date not set";
+} else {
+  $formattedDob = date('d-m-Y', strtotime($user["dob"]));
+}
+$profile_pic_url = $user["profile_pic_url"];
+if ($profile_pic_url === "default") {
+  $profile_pic_url = "uploads/images/users/emptyuser.jpg";
+} else {
+  $profile_pic_url = "uploads/images/users/" . htmlspecialchars($profile_pic_url);
+}
 ?>
 <html>
 
@@ -29,25 +33,24 @@
 </head>
 
 <body>
-  <div id="use-sidebar"></div>
-
+  <?php include "includes/sidebar.php"; ?>
   <main class="w75">
     <h1 class="breadcrumb">
       Your Profile
-      <a href="editinfo.html">
+      <a href="editinfo.php">
         <i class="bi bi-pencil"></i>
       </a>
     </h1>
     <section>
       <div class="profile-main">
-        <img src="images/pfp.jfif" alt="profile-pic" />
+        <img src="<?= $profile_pic_url ?>" alt="profile-pic" draggable="false" />
         <div class="profile-details">
           <span class="username">
-            <span> Username : </span>
             <?= htmlspecialchars($username) ?></span>
           <span class="name">
-            <span> Name : </span>
             <?= htmlspecialchars($user["name"]) ?></span>
+          <span class="dob"><span>Date of Birth : </span><?= $formattedDob ?></span>
+
           <div class="profile-follow">
             <div>Followers 28 |</div>
             <div>Following 56</div>
@@ -64,7 +67,7 @@
         </div>
       </div>
       <div class="profile-main">
-        <span class="row">Date of Birth : <span><?= $formattedDob ?></span></span>
+        <a href="changepassword.php">Change Password</a>
       </div>
     </section>
   </main>

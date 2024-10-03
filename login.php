@@ -2,8 +2,6 @@
 include "includes/config.php";
 include "includes/sessions/true.php";
 
-$database = new Database();
-$pdo = $database->open();
 
 $error = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

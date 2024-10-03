@@ -2,9 +2,6 @@
 include "includes/config.php";
 include "includes/sessions/true.php";
 
-$database = new Database();
-$pdo = $database->open();
-
 $fieldError = "";
 $usernameError = "";
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -32,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   if (empty($fieldError) && empty($usernameError)) {
     $hashPass = password_hash($pass, PASSWORD_BCRYPT);
-    $insertQuery = $pdo->prepare("INSERT INTO users(name,dob,username,profile_pic_url,password) VALUES(:name,:dob,:username,'def',:password)");
+    $insertQuery = $pdo->prepare("INSERT INTO users(name,dob,username,profile_pic_url,password) VALUES(:name,:dob,:username,'default',:password)");
     $insertQuery->execute([
       'name' => $name,
       'dob' => $dob,

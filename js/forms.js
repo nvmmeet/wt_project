@@ -43,3 +43,12 @@ function showPass() {
         passField.type = "password"
     }
 }
+
+function showPass2() {
+    let passField = document.getElementById("pass2");
+    if (passField.type === "password") {
+        passField.type = "text"
+    } else {
+        passField.type = "password"
+    }
+}
