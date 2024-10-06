@@ -1,0 +1,88 @@
+.modal-bg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  height: 100vh;
+  width: 100%;
+  backdrop-filter: blur(10px);
+  transform: translate(0, -100%);
+  transition: all 0.3s ease;
+}
+
+.modal {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
+  padding: 25px;
+  width: 100%;
+  position: relative;
+}
+
+.modal.pfp-upload {
+  max-width: 300px;
+}
+.modal.pfp-upload form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.modal img {
+  height: 150px;
+  width: 150px;
+  object-fit: cover;
+}
+
+.modal input[type="file"] {
+  display: none;
+}
+
+.modal label {
+  padding: 5px 10px;
+  border-radius: 3px;
+  background: rgba(0, 0, 0);
+  color: white;
+}
+
+.modal.pfp-upload img {
+  border-radius: 50%;
+}
+
+.upload_btn {
+  height: 35px;
+  width: 100px;
+  background: lightgreen;
+  border: none;
+  outline: none;
+  color: white;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.upload_btn:hover {
+  background: rgb(104, 231, 104);
+}
+
+.modal-bg.active {
+  transform: translate(0);
+}
+
+.modal .close-modal {
+  position: absolute;
+  color: white;
+  right: 10px;
+  top: 10px;
+  font-size: 14px;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 50%;
+}
+.modal .close-modal:hover {
+  background: rgba(0, 0, 0, 0.75);
+}

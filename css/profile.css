@@ -1,25 +1,3 @@
-.breadcrumb {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.breadcrumb a {
-  text-decoration: none;
-}
-
-.breadcrumb i {
-  font-size: 20px;
-  height: 50px;
-  width: 75px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: white;
-  border-radius: 10px;
-  color: #4e4e4e;
-}
-
 .profile-main {
   display: flex;
   align-items: center;
@@ -43,31 +21,46 @@
   display: grid;
 }
 
-.profile-details .username,
-.profile-details .name,
-.profile-details .dob {
-  font-size: 22px;
+.profile-details span {
+  font-size: 20px;
   color: white;
   margin: 5px;
 }
 
-.profile-details .dob span,
-.profile-details .username span,
-.profile-details .name span {
-  color: rgb(17, 114, 241);
-}
-
 .profile-details .profile-follow {
   display: flex;
-  gap: 5px;
+  gap: 25px;
   color: lightgray;
+  margin-top: 10px;
+  margin-left: 5px;
 }
 
-.profile-main a,
 .profile-main .row {
-  color: rgb(17, 114, 241);
+  color: dodgerblue;
 }
 
 .profile-main .row span {
   color: whitesmoke;
+}
+
+@media (max-width: 940px) {
+  .profile-main {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 350px) {
+  .profile-main img {
+    max-width: 175px;
+    height: 175px;
+  }
+  .profile-details span {
+    font-size: 16px;
+  }
+  .profile-details .profile-follow {
+    font-size: 14px;
+  }
+  .profile-main .row {
+    font-size: 12px;
+  }
 }

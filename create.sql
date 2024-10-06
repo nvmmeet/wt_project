@@ -62,3 +62,8 @@ CREATE TABLE `fav_songs` (
     FOREIGN KEY (`user_id`) REFERENCES `users`(`user_id`),
     FOREIGN KEY (`song_id`) REFERENCES `songs`(`song_id`)
 );
+
+
+CREATE TABLE `admins`(
+    `admin_id`
+);

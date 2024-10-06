@@ -1,6 +1,6 @@
 <?php
-include "includes/config.php";
 include "includes/sessions/true.php";
+include "includes/config.php";
 
 $fieldError = "";
 $usernameError = "";

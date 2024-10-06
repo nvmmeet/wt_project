@@ -1,0 +1,232 @@
+.square-cards {
+  margin-top: 25px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(125px, 1fr));
+  gap: 35px;
+}
+
+.square-cards.circle img {
+  border-radius: 50%;
+}
+
+.square-cards .card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+}
+
+.square-cards img {
+  height: 125px;
+  width: 125px;
+  object-fit: cover;
+  border-radius: 25px;
+  box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+}
+
+.square-cards span {
+  margin-top: 10px;
+  color: white;
+  font-size: 18px;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 90%;
+  text-align: center;
+}
+
+.rectangle-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(275px, 1fr));
+  gap: 5px;
+  margin-top: 25px;
+}
+
+.rectangle-cards .card {
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.rectangle-cards .card:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.rectangle-cards img {
+  height: 50px;
+  width: 50px;
+}
+
+.rectangle-cards .card span {
+  margin-left: 10px;
+  font-size: 20px;
+  color: white;
+  width: 85%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.song-cards {
+  margin-top: 50px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 60px 40px;
+}
+
+.song-cards .song-card {
+  height: 150px;
+  border-radius: 20px;
+  position: relative;
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+  justify-content: flex-end;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px,
+    rgba(0, 0, 0, 0.05) 0px 5px 10px;
+  transition: all 0.3s ease;
+  background: linear-gradient(45deg, rebeccapurple, purple);
+}
+
+.song-cards .song-card:nth-child(2n) {
+  background: linear-gradient(45deg, blue, dodgerblue);
+}
+
+.song-cards .song-card:nth-child(3n) {
+  background: linear-gradient(45deg, greenyellow, green);
+}
+
+.song-card img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -80%);
+  height: 125px;
+  width: 125px;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  object-fit: cover;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+}
+
+.song-card:hover > img {
+  transform: translate(-50%, -95%);
+}
+
+.song-card label {
+  position: absolute;
+  right: 45px;
+  bottom: -17.5px;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-radius: 50%;
+  color: #4e4e4e;
+  display: none;
+}
+
+.song-card span {
+  font-size: 18px;
+  color: white;
+  margin-left: 10px;
+  width: 90%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: auto;
+}
+
+.song-card p {
+  font-size: 12px;
+  color: lightgray;
+  margin-left: 10px;
+}
+
+.song-card:hover label,
+.song-card:hover .play-button {
+  display: flex;
+}
+
+.song-card input[type="checkbox"] {
+  display: none;
+}
+
+.song-card input[type="checkbox"]:checked ~ .song-card-dropdown {
+  display: grid;
+}
+
+.song-card input[type="checkbox"] {
+  display: none;
+}
+
+.song-card-dropdown {
+  font-size: 14px;
+  display: none;
+  position: absolute;
+  bottom: 20px;
+  right: 15px;
+  background-color: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(10px);
+  color: white;
+  border-radius: 8px;
+  z-index: 100;
+  width: 150px;
+}
+
+.song-card-dropdown .dropdown-item {
+  padding: 5px 10px;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.3s;
+  border-radius: 5px;
+}
+
+.song-card-dropdown .dropdown-item:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.sub-dropdown-content {
+  display: none;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+}
+
+.sub-dropdown:hover .sub-dropdown-content {
+  display: flex;
+  flex-direction: column-reverse;
+  position: absolute;
+  right: 15px;
+  top: -100%;
+}
+
+.song-card input:checked + label + .song-card-dropdown {
+  display: block;
+}
+
+.song-card .dropdown-item a {
+  text-decoration: none;
+  color: white;
+}
+
+@media (max-width: 900px) {
+  .square-cards {
+    gap: 20px;
+  }
+  .song-cards {
+    gap: 60px 25px;
+  }
+  .song-card span {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 375px) {
+  .song-cards {
+    gap: 60px 10px;
+  }
+}

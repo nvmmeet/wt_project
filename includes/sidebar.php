@@ -25,13 +25,13 @@ if ($profile_pic_url === "default") {
         <i class="bi bi-compass"></i>
         <span>Explore</span>
       </h3>
-      <a href="home.html" class="active">
+      <a href="index.php" class="active">
         <span>Home</span>
       </a>
-      <a href="albums.html">
+      <a href="albums.php">
         <span>Albums</span>
       </a>
-      <a href="artists.html">
+      <a href="artists.php">
         <span>Artists</span>
       </a>
     </div>
@@ -40,13 +40,13 @@ if ($profile_pic_url === "default") {
         <i class="bi bi-collection-play"></i>
         <span>Library</span>
       </h3>
-      <a href="favourites.html">
+      <a href="favourites.php">
         <span>Favourites</span>
       </a>
-      <a href="playlists.html">
+      <a href="playlists.php">
         <span>Playlists</span>
       </a>
-      <a href="fav-artists.html">
+      <a href="followed-artists.php">
         <span>Followed Artists</span>
       </a>
     </div>
@@ -59,7 +59,7 @@ if ($profile_pic_url === "default") {
         <img src="<?= $profile_pic_url ?>" alt="pfp" draggable="false" />
         <span><?= htmlspecialchars($user["name"]) ?></span>
       </a>
-      <a href="uploads.html" class="no-pad">
+      <a href="my-uploads.php" class="no-pad">
         <i class="bi bi-box-arrow-up"></i>
         <span>My uploads</span>
       </a>
@@ -70,3 +70,18 @@ if ($profile_pic_url === "default") {
     </div>
   </div>
 </aside>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const currentPage = window.location.pathname;
+
+    const links = document.querySelectorAll(".links a");
+
+    links.forEach(link => {
+      if (link.href.includes(currentPage)) {
+        link.classList.add("active");
+      } else {
+        link.classList.remove("active");
+      }
+    });
+  });
+</script>

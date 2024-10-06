@@ -15,3 +15,4 @@ function toggleSearchSidebar() {
     sidebar.classList.remove("active");
   }
 }
+
