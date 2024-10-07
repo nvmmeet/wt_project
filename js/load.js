@@ -35,8 +35,8 @@ function displayResults(data) {
             const songElement = document.createElement('div');
             songElement.className = 'search-result';
             songElement.innerHTML = `
-                <a href="" class="image-50">
-                    <div><img src="${song.song_pic_url}" alt="search-song" /></div>
+                <a href="song.php?song=${song.song_id}" class="image-50">
+                    <div><img src="uploads/images/songs/${song.song_pic_url}" alt="search-song" /></div>
                     <div><span>${song.song_name}</span><p>${song.username}</p></div>
                 </a>`;
             songsSection.appendChild(songElement);
@@ -53,18 +53,18 @@ function displayResults(data) {
 
         data.albums.forEach(album => {
             const albumElement = document.createElement('div');
-            albumElement.className = 'search-result';
-            albumElement.innerHTML = `
-                <a href="album.php">
-                    <div><img src="${album.album_pic_url}" alt="search-album-image" /></div>
+          albumElement.className = 'search-result';
+          albumElement.innerHTML = `
+          <a href="album.php?album=${album.album_id}">
+          <div><img src="uploads/images/albums/${album.album_pic_url}" alt="search-album-image" /></div>
                     <div><span>${album.album_name}</span></div>
-                </a>`;
-            albumsSection.appendChild(albumElement);
-        });
+                    </a>`;
+                    albumsSection.appendChild(albumElement);
+                  });
 
         searchResultsContainer.appendChild(albumsSection);
     }
-
+    
     if (data.artists.length > 0) {
         const artistsSection = document.createElement('div');
         const artistsHeading = document.createElement('h3');
@@ -72,11 +72,11 @@ function displayResults(data) {
         artistsSection.appendChild(artistsHeading);
 
         data.artists.forEach(artist => {
-            const artistElement = document.createElement('div');
+          const artistElement = document.createElement('div');
             artistElement.className = 'search-result';
             artistElement.innerHTML = `
-                <a href="artist.php">
-                    <div><img src="${artist.profile_pic_url}" alt="search-artist-image" /></div>
+                <a href="artist.php?artist=${artist.user_id}">
+                    <div><img src="uploads/images/users/${artist.profile_pic_url}" alt="search-artist-image" /></div>
                     <div><span>${artist.username}</span></div>
                 </a>`;
             artistsSection.appendChild(artistElement);

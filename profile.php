@@ -126,7 +126,7 @@ $favArtistCount = $favArtistQuery->fetch()['fav_artist_count'];
   </main>
 
   <div class="modal-bg" id="modal-bg">
-    <div class="modal pfp-upload">
+    <div class="modal upload">
       <i class="bi bi-x-lg close-modal" onclick="toggleModal()"></i>
       <form action="pfpupload.php" method="POST" enctype="multipart/form-data">
         <img src='<?= $profile_pic_url ?>' alt="upload-pic" id="image_preview">

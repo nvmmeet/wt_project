@@ -119,6 +119,7 @@
   position: absolute;
   right: 45px;
   bottom: -17.5px;
+  cursor: pointer;
   width: 35px;
   height: 35px;
   display: flex;
@@ -128,6 +129,12 @@
   border-radius: 50%;
   color: #4e4e4e;
   display: none;
+  transition: all 0.3s ease;
+}
+
+.song-card label.delete {
+  background: rgb(221, 24, 24);
+  color: white;
 }
 
 .song-card span {

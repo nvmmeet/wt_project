@@ -20,6 +20,10 @@ if (!$user_id) {
     } else {
         $loggedInUserId = $loggedInUser['user_id']; // Get logged-in user's ID
 
+        $isFollowed = $pdo->prepare("SELECT * FROM social WHERE followed_id = :artist_id AND following_id = :user_id");
+        $isFollowed->execute(["artist_id" => $user_id, "user_id" => $loggedInUserId]);
+        $iffollow = $isFollowed->fetch();
+
         // Query to fetch artist details
         $artistPageQuery = $pdo->prepare("
             SELECT 
@@ -110,7 +114,7 @@ if (!$user_id) {
         <?php if (!$error): ?>
             <section>
                 <div class="profile-main">
-                    <img src="<?= htmlspecialchars($artist['profile_pic_url'] ?? 'uploads/images/profiles/default_profile.jpg') ?>" alt="profile-pic" draggable="false" />
+                    <img src="<?= $artist['profile_pic_url'] === 'default' ? 'uploads/images/users/emptyuser.jpg' : 'uploads/images/users/' . $artist["profile_pic_url"] ?>" alt="profile-pic" draggable="false" />
                     <div class="profile-details">
                         <span><?= htmlspecialchars($artist['username']) ?></span>
                         <span><?= htmlspecialchars($artist['name']) ?></span>
@@ -119,7 +123,17 @@ if (!$user_id) {
                             <div>Followers: <?= htmlspecialchars($followerCount) ?></div>
                             <div>Following: <?= htmlspecialchars($followingCount) ?></div>
                         </div>
+                        <?php if (empty($iffollow)): ?>
+                            <a href="follow.php?id=<?= htmlspecialchars($artist['user_id']) ?>">
+                                <button class="follow-btn">Follow</button>
+                            </a>
+                        <?php else: ?>
+                            <a href="unfollow.php?id=<?= htmlspecialchars($artist['user_id']) ?>">
+                                <button class="follow-btn">Unfollow</button>
+                            </a>
+                        <?php endif; ?>
                     </div>
+
                 </div>
             </section>
 
@@ -134,7 +148,7 @@ if (!$user_id) {
                         if (!isset($albums[$row['album_id']])) {
                             $albums[$row['album_id']] = [
                                 'album_name' => $row['album_name'],
-                                'album_pic_url' => $row['album_pic_url'] ?: 'emptyalbum.jpg', // Default image if null
+                                'album_pic_url' => $row['album_pic_url'] ?: 'emptyalbum.jpg',
                                 'songs' => []
                             ];
                         }
@@ -148,8 +162,8 @@ if (!$user_id) {
                     }
                     foreach ($albums as $album_id => $album) {
                         $image = $album['album_pic_url'] !== 'default'
-                            ? 'uploads/images/album/' . htmlspecialchars($album['album_pic_url'])
-                            : 'uploads/images/album/emptyalbum.jpg';
+                            ? 'uploads/images/albums/' . htmlspecialchars($album['album_pic_url'])
+                            : 'uploads/images/albums/emptyalbum.jpg';
 
                         echo "
                         <a href='album.php?album=" . htmlspecialchars($album_id) . "' class='card'>

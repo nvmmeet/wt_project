@@ -75,44 +75,10 @@ section {
   height: 180px;
 }
 
-/* .breadcrumb input#breadcrumb:checked ~ .breadcrumb-dropdown.uploads { */
-/* height: 140px; */
-/* } */
-
-.breadcrumb .breadcrumb-dropdown {
-  position: fixed;
-  top: 80px;
-  right: 20px;
-  font-size: 16px;
-  background: #101010;
-  color: lightgray;
-  border-radius: 10px;
-  height: 0;
-  overflow: hidden;
-  transition: all 0.3s ease;
+.breadcrumb input#breadcrumb:checked ~ .breadcrumb-dropdown.my-upload {
+  height: 90px;
 }
 
-.breadcrumb-dropdown .dropdown-item {
-  padding: 12.5px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.breadcrumb-dropdown .dropdown-item:hover {
-  background: rgba(0, 0, 0, 0.75);
-  color: white;
-}
-
-.breadcrumb-dropdown .dropdown-item:hover a {
-  color: white;
-}
-
-.breadcrumb-dropdown .dropdown-item a {
-  text-decoration: none;
-  color: lightgrey;
-  height: 100%;
-  width: 100%;
-}
 .breadcrumb-dropdown .dropdown-item.del:hover {
   background: rgba(255, 0, 0, 0.1);
 }
@@ -127,7 +93,7 @@ section {
 }
 
 .section-upper h2 {
-  color: white;
+  color: lightgray;
 }
 
 .section-upper a {
@@ -157,9 +123,98 @@ section {
   color: white;
 }
 
+.song-card label:active,
 .play-button:active {
   scale: 0.9;
   opacity: 0.9;
+}
+
+.album-header img {
+  height: 200px;
+  width: 200px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px 12px rgba(0, 0, 0, 0.1);
+}
+
+.album-header {
+  position: relative;
+}
+.album-header h2 {
+  color: white;
+  font-size: 30px;
+  margin: 20px 0;
+}
+
+.album-header .actions {
+  position: absolute;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100px;
+}
+
+.album-header .actions div {
+  height: 40px;
+  width: 40px;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.album-header .actions div:active {
+  scale: 0.9;
+}
+
+.album-header .actions div.main-play-button {
+  background: dodgerblue;
+}
+
+.album-header .actions div.extra {
+  background: white;
+}
+
+.album-header input:checked ~ .dropdown-menu {
+  height: 180px;
+}
+
+.album-header .dropdown-menu {
+  position: absolute;
+  top: 80px;
+  right: 20px;
+  font-size: 16px;
+  background: #101010;
+  color: lightgray;
+  border-radius: 10px;
+  height: 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.album-header .dropdown-item {
+  padding: 12.5px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.album-header .dropdown-item:hover {
+  background: rgba(0, 0, 0, 0.75);
+  color: white;
+}
+
+.album-header .dropdown-item:hover a {
+  color: white;
+}
+
+.album-header .dropdown-item a {
+  text-decoration: none;
+  color: lightgrey;
+  height: 100%;
+  width: 100%;
 }
 
 @media (max-width: 900px) {

@@ -6,8 +6,9 @@
   height: 100vh;
   width: 100%;
   backdrop-filter: blur(10px);
-  transform: translate(0, -100%);
   transition: all 0.3s ease;
+  position: fixed;
+  top: -100%;
 }
 
 .modal {
@@ -18,10 +19,11 @@
   position: relative;
 }
 
-.modal.pfp-upload {
+.modal.upload {
   max-width: 300px;
 }
-.modal.pfp-upload form {
+
+.modal.upload form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -34,6 +36,17 @@
   object-fit: cover;
 }
 
+.modal img {
+  height: 150px;
+  width: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.modal img.rad15 {
+  border-radius: 20px;
+}
+
 .modal input[type="file"] {
   display: none;
 }
@@ -43,10 +56,6 @@
   border-radius: 3px;
   background: rgba(0, 0, 0);
   color: white;
-}
-
-.modal.pfp-upload img {
-  border-radius: 50%;
 }
 
 .upload_btn {
@@ -65,7 +74,7 @@
 }
 
 .modal-bg.active {
-  transform: translate(0);
+  top: 0;
 }
 
 .modal .close-modal {
@@ -85,4 +94,36 @@
 }
 .modal .close-modal:hover {
   background: rgba(0, 0, 0, 0.75);
+}
+
+.modal input[type="text"] {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  max-width: 100%;
+  width: 100%;
+  border: none;
+  outline: none;
+  height: 35px;
+  padding: 0 5px;
+  color: white;
+}
+
+.modal select {
+  max-width: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  color: white;
+  outline: none;
+  border-radius: 10px;
+  height: 35px;
+}
+
+.modal p {
+  width: 90%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  color: lightgrey;
 }

@@ -64,17 +64,23 @@ $playlists = $playlistQuery->fetchAll();
 <body>
     <?php include "includes/sidebar.php"; ?>
     <main>
+        <div class="breadcrumb">
+            <h1>Album</h1>
+        </div>
         <?php if (isset($error)): ?>
             <h1 class="error"><?= htmlspecialchars($error) ?></h1>
         <?php else: ?>
             <section class="album-section">
                 <div class="album-header">
-                    <img src="<?= htmlspecialchars($album['album_pic_url']) ?>" alt="Album Cover" style="border-radius: 20px;" />
+                    <?php $url = $album['album_pic_url'] === 'default' ? "uploads/images/albums/emptyalbum.jpg" : "uploads/images/albums/" . $album["album_pic_url"] ?>
+                    <img src="<?= $url ?>" alt="Album Cover" style="border-radius: 20px;" />
                     <h2><?= htmlspecialchars($album['album_name']) ?></h2>
-                    <a href="#" class="play-button"><i class="bi bi-play-circle-fill"></i> Play</a>
+                    <div class="actions">
+                        <div class="delete"><i class="bi bi-trash"></i></div>
+                        <div class="main-play-button"><i class="bi bi-caret-right"></i></div>
+                    </div>
                 </div>
 
-                <h2>Songs</h2>
                 <div class="song-cards">
                     <?php foreach ($albumData as $song): ?>
                         <?php if ($song['song_id']): ?>

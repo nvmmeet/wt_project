@@ -56,7 +56,7 @@ if ($profile_pic_url === "default") {
         <span>Profile</span>
       </h3>
       <a href="profile.php" class="no-pad">
-        <img src="<?= $profile_pic_url ?>" alt="pfp" draggable="false" />
+        <img src="<?= $profile_pic_url ?>" alt="pfp" draggable="false" style="object-fit: cover;" />
         <span><?= htmlspecialchars($user["name"]) ?></span>
       </a>
       <a href="my-uploads.php" class="no-pad">

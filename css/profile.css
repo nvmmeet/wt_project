@@ -43,6 +43,19 @@
   color: whitesmoke;
 }
 
+.profile-main button.follow-btn {
+  background: dodgerblue;
+  color: white;
+  height: 35px;
+  width: 250px;
+  margin-top: 25px;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
 @media (max-width: 940px) {
   .profile-main {
     flex-direction: column;
