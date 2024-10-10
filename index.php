@@ -78,11 +78,11 @@ $playlists = $playlistsQuery->fetchAll();
         <h2>Artists</h2>
         <a href="artists.php">View all <i class="bi bi-caret-right"></i></a>
       </div>
-      <div class="square-cards">
+      <div class="square-cards circle">
         <?php if (count($artists) > 0) {
           foreach ($artists as $artist) {
             $artistImage = $artist['profile_pic_url'] === 'default'
-              ? 'uploads/images/users/emptyuser.jpeg'
+              ? 'uploads/images/users/emptyuser.jpg'
               : 'uploads/images/users/' . $artist['profile_pic_url'];
             echo "
               <a href='artist.php?artist=" . $artist['user_id'] . "' class='card'>
@@ -106,9 +106,9 @@ $playlists = $playlistsQuery->fetchAll();
         try {
           if (count($randomSongs) > 0) {
             foreach ($randomSongs as $song) {
-              $songImage = !empty($song['song_pic_url'])
+              $songImage = $song['song_pic_url'] !== 'default'
                 ? 'uploads/images/songs/' . $song['song_pic_url']
-                : 'uploads/images/songs/default_song.jpg';
+                : 'uploads/images/songs/emptysong.jpg';
 
               // Get the artist name
               $artistQuery = $pdo->prepare("SELECT username FROM users WHERE user_id = :user_id");

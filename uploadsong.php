@@ -20,12 +20,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = "Please provide a song name.";
     }
 
-    $song_pic_url = '';
+    // Initialize the song_pic_url
+    $song_pic_name = 'default'; // Default image name
+
+    // Handle song image upload
     if (!empty($_FILES['song_image_upload']['name'])) {
-        $song_pic_url = uploadFile('song_image_upload', 'uploads/images/songs/', $errors);
+        $uploaded_pic_name = uploadFile('song_image_upload', 'uploads/images/songs/', $errors);
+        if ($uploaded_pic_name === 'emptysong.jpg') {
+            $song_pic_name = 'default'; // If the uploaded image is 'emptysong.jpg', use 'default'
+        } else {
+            $song_pic_name = $uploaded_pic_name; // Otherwise, store the uploaded image name
+        }
     }
 
     if (empty($errors)) {
+        // Handle song file upload
         $song_url = uploadFile('song_url', 'uploads/songs/', $errors);
 
         if (empty($errors)) {
@@ -39,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $songInsertQuery->execute([
                 'song_name' => $song_name,
                 'song_url' => $song_url,
-                'song_pic_url' => $song_pic_url,
+                'song_pic_url' => $song_pic_name, // Store only the image name
                 'user_id' => $user_id,
             ]);
 
@@ -77,7 +86,7 @@ function uploadFile($inputName, $uploadDir, &$errors)
     }
 
     if (move_uploaded_file($_FILES[$inputName]['tmp_name'], $targetFile)) {
-        return $fileName;
+        return $fileName; // Return the filename
     } else {
         $errors[] = "There was an error uploading the file.";
         return null;

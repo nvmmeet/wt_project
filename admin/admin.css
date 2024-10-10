@@ -1,0 +1,110 @@
+* {
+  padding: 0;
+  margin: 0;
+  font-family: "Times New Roman", Times, serif;
+  box-sizing: border-box;
+}
+
+body {
+  background: #eee;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: white;
+  border: 1px solid #4e4e4e;
+  cursor: pointer;
+  position: relative;
+}
+
+th i {
+  margin-left: 5px;
+}
+
+td {
+  border: 1px solid #4e4e4e;
+  max-width: 300px; /* Increased maximum width for better visibility of long addresses */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+td img {
+  width: 50px; /* Square width */
+  height: 50px; /* Square height */
+  border-radius: 5px; /* Square corners */
+  display: block;
+  object-fit: cover;
+  margin: 0 auto; /* Centering the image */
+}
+
+td button {
+  width: 75px;
+  height: 30px;
+  background: rgb(255, 49, 49);
+  color: white;
+  border: none;
+  outline: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  max-width: 15%;
+  width: 100%;
+  background: white;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  height: 100vh;
+}
+
+.sidebar .links {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.sidebar .links a {
+  height: 40px;
+  width: 100%;
+  padding: 0 10px;
+  border: none;
+  outline: none;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #4e4e4e;
+  font-size: 18px;
+}
+
+.sidebar .links a.active {
+  background: rgba(255, 166, 0, 0.25);
+}
+
+main {
+  position: fixed;
+  top: 0;
+  left: 15%;
+  max-width: 85%;
+  width: 100%;
+}

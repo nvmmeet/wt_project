@@ -75,7 +75,7 @@ $database->close();
     <div class="modal upload">
       <i class="bi bi-x-lg close-modal" onclick="toggleModal()"></i>
       <form action="uploadplaylist.php" method="POST" enctype="multipart/form-data" name="playlist_form" onsubmit="return validateForm2()">
-        <?php $defaulturl = "uploads/images/playlists/emptyplaylist.jpeg" ?>
+        <?php $defaulturl = "uploads/images/playlists/emptyplaylist.jpg" ?>
         <img src='<?= $defaulturl ?>' alt="upload-pic" id="image_preview" class="rad15">
         <input type="file" name="playlist_image_upload" accept="image/*" id="playlist_image_upload" onchange="changeImage(event)">
         <label for="playlist_image_upload">Change Image</label>

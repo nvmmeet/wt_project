@@ -64,6 +64,8 @@ CREATE TABLE `fav_songs` (
 );
 
 
-CREATE TABLE `admins`(
-    `admin_id`
+CREATE TABLE `admin` (
+    `admin_id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `admin_username` VARCHAR(50) NOT NULL UNIQUE,
+    `admin_password` VARCHAR(255) NOT NULL
 );

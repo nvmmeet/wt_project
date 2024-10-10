@@ -35,7 +35,7 @@ $albumUser = $userQuery->fetch();
 
           foreach ($albumsQuery as $album) {
             if ($albumUser["user_id"] !== $album["user_id"]) {
-              $image = $album["album_pic_url"] === 'default'
+              $image = $album["album_pic_url"] !== 'default'
                 ? 'uploads/images/albums/' . $album['album_pic_url']
                 : 'uploads/images/albums/emptyalbum.jpg';
 

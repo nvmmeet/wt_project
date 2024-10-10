@@ -89,6 +89,15 @@ if (!$user_id) {
             ");
             $playlistsQuery->execute(['loggedInUserId' => $loggedInUserId]);
             $playlists = $playlistsQuery->fetchAll(PDO::FETCH_ASSOC);
+
+            // Fetch all songs by the artist
+            $allSongsQuery = $pdo->prepare("
+                SELECT s.song_id, s.song_name, s.song_pic_url 
+                FROM songs s 
+                WHERE s.user_id = :user_id
+            ");
+            $allSongsQuery->execute(['user_id' => $user_id]);
+            $allSongs = $allSongsQuery->fetchAll(PDO::FETCH_ASSOC);
         }
     }
 }
@@ -133,7 +142,6 @@ if (!$user_id) {
                             </a>
                         <?php endif; ?>
                     </div>
-
                 </div>
             </section>
 
@@ -180,63 +188,55 @@ if (!$user_id) {
                     <h2>Songs</h2>
                 </div>
                 <div class="song-cards">
-                    <?php
-                    foreach ($results as $row) {
-                        if ($row['song_id']) {
-                            $isLiked = in_array($row['song_id'], $likedSongs);
-                            $songImage = !empty($row['song_pic_url']) ? 'uploads/images/songs/' . htmlspecialchars($row['song_pic_url']) : 'uploads/images/songs/emptysong.jpg';
+                    <?php  // Fetch and display songs not in albums
+                    foreach ($allSongs as $song) {
+                        $isLiked = in_array($song['song_id'], $likedSongs);
+                        $songImage = $song['song_pic_url'] !== 'default' ? 'uploads/images/songs/' . htmlspecialchars($song['song_pic_url']) : 'uploads/images/songs/emptysong.jpg';
 
-                            echo "
-                            <div class='song-card'>
-                                <img src='" . htmlspecialchars($songImage) . "' alt='song' />
-                                <span>" . htmlspecialchars($row['song_name']) . "</span>
-                                <p>" . htmlspecialchars($artist['username']) . "</p>
-                                <div class='play-button'>
-                                    <i class='bi bi-caret-right-fill'></i>
-                                </div>
-                                <input type='checkbox' id='dropdown" . htmlspecialchars($row['song_id']) . "'/>
-                                <label for='dropdown" . htmlspecialchars($row['song_id']) . "'><i class='bi bi-three-dots-vertical'></i></label>
-                                <div class='song-card-dropdown'>
-                                    <div class='dropdown-item sub-dropdown hov'>
-                                        Add to Playlist
-                                        <div class='sub-dropdown-content'>";
+                        echo "
+                        <div class='song-card'>
+                            <img src='" . htmlspecialchars($songImage) . "' alt='song' />
+                            <span>" . htmlspecialchars($song['song_name']) . "</span>
+                            <p>" . htmlspecialchars($artist['username']) . "</p>
+                            <div class='play-button'>
+                                <i class='bi bi-caret-right-fill'></i>
+                            </div>
+                            <input type='checkbox' id='dropdown" . htmlspecialchars($song['song_id']) . "'/>
+                            <label for='dropdown" . htmlspecialchars($song['song_id']) . "'><i class='bi bi-three-dots-vertical'></i></label>
+                            <div class='song-card-dropdown'>
+                                <div class='dropdown-item sub-dropdown hov'>
+                                    Add to Playlist
+                                    <div class='sub-dropdown-content'>";
 
-                            if (count($playlists) > 0) {
-                                foreach ($playlists as $playlist) {
-                                    $inPlaylistQuery = $pdo->prepare("SELECT 1 FROM playlist_songs WHERE playlist_id = :playlist_id AND song_id = :song_id");
-                                    $inPlaylistQuery->execute(['playlist_id' => $playlist['playlist_id'], 'song_id' => $row['song_id']]);
-                                    $isInPlaylist = $inPlaylistQuery->fetch();
+                        if (count($playlists) > 0) {
+                            foreach ($playlists as $playlist) {
+                                $inPlaylistQuery = $pdo->prepare("SELECT 1 FROM playlist_songs WHERE playlist_id = :playlist_id AND song_id = :song_id");
+                                $inPlaylistQuery->execute(['playlist_id' => $playlist['playlist_id'], 'song_id' => $song['song_id']]);
+                                $alreadyAdded = $inPlaylistQuery->fetchColumn();
 
-                                    if (!$isInPlaylist) {
-                                        echo "
-                                            <div class='dropdown-item'>
-                                                <a href='addtopl.php?song=" . htmlspecialchars($row['song_id']) . "&playlist=" . htmlspecialchars($playlist['playlist_id']) . "'>
-                                                    " . htmlspecialchars($playlist['playlist_name']) . "
-                                                </a>
-                                            </div>";
-                                    }
-                                }
+                                echo "<a href='addToPlaylist.php?song_id=" . htmlspecialchars($song['song_id']) . "&playlist_id=" . htmlspecialchars($playlist['playlist_id']) . "' class='add-to-playlist-btn'>
+                                    " . ($alreadyAdded ? 'Already in playlist' : 'Add to ' . htmlspecialchars($playlist['playlist_name'])) . "
+                                </a>";
                             }
-
-                            echo "
-                                        </div>
-                                    </div>
-                                     <div class='dropdown-item'>
-                                        " . ($isLiked
-                                ? "<a href='removefromfav.php?song=" . htmlspecialchars($row['song_id']) . "'>Unfavourite it!</a>"
-                                : "<a href='addtofav.php?song=" . htmlspecialchars($row['song_id']) . "'>Favourite it!</a>") . "
-                                    </div>
-                                    </div>
-                            </div>";
+                        } else {
+                            echo "No Playlists Available";
                         }
+
+                        echo "
+                                    </div>
+                                </div>
+                                <div class='dropdown-item'>
+                                    " . ($isLiked ? "<a href='removefromfav.php?song=" . htmlspecialchars($song['song_id']) . "'>Unfavourite it!</a>" : "<a href='addtofav.php?song=" . htmlspecialchars($song['song_id']) . "'>Favourite it!</a>") . "
+                                </div>
+                            </div>
+                        </div>";
                     }
                     ?>
                 </div>
             </section>
         <?php endif; ?>
     </main>
-    <?php include "includes/searchbar.php"; ?>
+    <?php include "includes/searchbar.php" ?>
 </body>
 
 </html>
-``

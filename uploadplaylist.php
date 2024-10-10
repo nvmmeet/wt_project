@@ -21,14 +21,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $playlist_name = $_POST['album_name']; // Use the album_name field for playlist name
     }
 
-    // Handle playlist image upload
-    $playlist_pic_url = 'uploads/images/playlists/emptyplaylist.jpeg'; // Default playlist image
+    // Default playlist image name
+    $playlist_pic_name = 'emptyplaylist.jpg'; // Default image name
 
+    // Handle playlist image upload
     if (!empty($_FILES['playlist_image_upload']['name'])) {
-        $playlist_pic_url = uploadFile('playlist_image_upload', 'uploads/images/playlists/', $errors);
+        $playlist_pic_name = uploadFile('playlist_image_upload', 'uploads/images/playlists/', $errors);
     }
 
-    // If no errors, insert into the database
+    // If no errors, set 'default' if the image name is emptyplaylist.jpg
+    if ($playlist_pic_name === 'emptyplaylist.jpg') {
+        $playlist_pic_name = 'default'; // Set to 'default' for the database
+    }
+
+    // If there are no errors, insert into the database
     if (empty($errors)) {
         // Insert playlist details into the database
         $playlistInsertQuery = $pdo->prepare("
@@ -37,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ");
         $playlistInsertQuery->execute([
             'playlist_name' => $playlist_name,
-            'playlist_pic_url' => $playlist_pic_url, // Image file name or default image
+            'playlist_pic_url' => $playlist_pic_name, // Store only the image name
             'user_id' => $user_id,
         ]);
 

@@ -30,8 +30,9 @@ $database->close();
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet" />
-  <link rel="stylesheet" href="css/main.css" />
   <link rel="stylesheet" href="css/sidebar.css" />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/cards.css" />
 </head>
 
 <body>
@@ -44,7 +45,8 @@ $database->close();
         <?php if (count($followedArtists) > 0): ?>
           <?php foreach ($followedArtists as $artist): ?>
             <a href="artist.php?artist=<?= $artist['user_id'] ?>" class="card">
-              <img src="<?= htmlspecialchars($artist['profile_pic_url']) ?>" alt="<?= htmlspecialchars($artist['name']) ?>" />
+              <?php $artistUrl = $artist['profile_pic_url'] === "default" ? "uploads/images/users/emptyuser.jpg" : "uploads/images/users/" . $artist["profile_pic_url"] ?>
+              <img src="<?= $artistUrl ?>" alt="<?= htmlspecialchars($artist['name']) ?>" />
               <span><?= htmlspecialchars($artist['name']) ?></span>
             </a>
           <?php endforeach; ?>

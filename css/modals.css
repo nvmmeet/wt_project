@@ -5,10 +5,10 @@
   z-index: 2;
   height: 100vh;
   width: 100%;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(5px);
   transition: all 0.3s ease;
+  scale: 0;
   position: fixed;
-  top: -100%;
 }
 
 .modal {
@@ -74,7 +74,7 @@
 }
 
 .modal-bg.active {
-  top: 0;
+  scale: 1;
 }
 
 .modal .close-modal {

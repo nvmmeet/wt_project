@@ -44,6 +44,12 @@ section {
   margin-top: 25px;
 }
 
+.nothing {
+  max-width: 100%;
+  width: 100%;
+  background: red;
+}
+
 .breadcrumb {
   color: white;
   padding-bottom: 10px;
@@ -67,12 +73,40 @@ section {
   cursor: pointer;
 }
 
+.breadcrumb-dropdown {
+  position: fixed;
+  top: 80px;
+  font-size: 14px;
+  right: 20px;
+  background: #101010;
+  border-radius: 8px;
+  height: 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.dropdown-item {
+  padding: 12.5px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.dropdown-item:hover {
+  background: rgba(0, 0, 0, 0.2);
+  color: white;
+}
+
+.dropdown-item a {
+  color: lightgray;
+  text-decoration: none;
+}
+
 .breadcrumb input#breadcrumb {
   display: none;
 }
 
 .breadcrumb input#breadcrumb:checked ~ .breadcrumb-dropdown {
-  height: 180px;
+  height: 175px;
 }
 
 .breadcrumb input#breadcrumb:checked ~ .breadcrumb-dropdown.my-upload {
@@ -152,6 +186,7 @@ section {
   align-items: center;
   justify-content: space-between;
   width: 100px;
+  bottom: 5%;
 }
 
 .album-header .actions div {
@@ -174,47 +209,8 @@ section {
   background: dodgerblue;
 }
 
-.album-header .actions div.extra {
-  background: white;
-}
-
-.album-header input:checked ~ .dropdown-menu {
-  height: 180px;
-}
-
-.album-header .dropdown-menu {
-  position: absolute;
-  top: 80px;
-  right: 20px;
-  font-size: 16px;
-  background: #101010;
-  color: lightgray;
-  border-radius: 10px;
-  height: 0;
-  overflow: hidden;
-  transition: all 0.3s ease;
-}
-
-.album-header .dropdown-item {
-  padding: 12.5px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.album-header .dropdown-item:hover {
-  background: rgba(0, 0, 0, 0.75);
-  color: white;
-}
-
-.album-header .dropdown-item:hover a {
-  color: white;
-}
-
-.album-header .dropdown-item a {
-  text-decoration: none;
-  color: lightgrey;
-  height: 100%;
-  width: 100%;
+.album-header .actions div.delete {
+  background: rgb(255, 69, 69);
 }
 
 @media (max-width: 900px) {

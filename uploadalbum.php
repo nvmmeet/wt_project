@@ -18,19 +18,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $album_name = $_POST['album_name'];
     }
 
-    $album_pic_url = 'uploads/images/albums/emptyalbum.jpeg';
+    // Default image name
+    $album_pic_name = 'emptyalbum.jpeg';  // default image name
 
     if (!empty($_FILES['album_image_upload']['name'])) {
-        $album_pic_url = uploadFile('album_image_upload', 'uploads/images/albums/', $errors);
+        // Upload the image and get the filename
+        $album_pic_name = uploadFile('album_image_upload', 'uploads/images/albums/', $errors);
+
+        // If the uploaded file is emptyalbum.jpeg, change it to 'default'
+        if ($album_pic_name === 'emptyalbum.jpeg') {
+            $album_pic_name = 'default';
+        }
     }
+
     if (empty($errors)) {
         $albumInsertQuery = $pdo->prepare("
             INSERT INTO albums (album_name, album_pic_url, user_id)
-            VALUES (:album_name, :album_pic_url, :user_id)
+            VALUES (:album_name, :album_pic_name, :user_id)
         ");
         $albumInsertQuery->execute([
             'album_name' => $album_name,
-            'album_pic_url' => $album_pic_url,
+            'album_pic_name' => $album_pic_name,  // Store only the filename
             'user_id' => $user_id,
         ]);
 
@@ -54,7 +62,7 @@ function uploadFile($inputName, $uploadDir, &$errors)
     }
 
     if (move_uploaded_file($_FILES[$inputName]['tmp_name'], $targetFile)) {
-        return $fileName;
+        return $fileName;  // Return the filename
     } else {
         $errors[] = "There was an error uploading the file.";
         return null;

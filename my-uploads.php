@@ -86,7 +86,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php if (!empty($songs)): ?>
                     <?php foreach ($songs as $song): ?>
                         <div class='song-card'>
-                            <img src='uploads/images/songs/<?= htmlspecialchars($song['song_pic_url']) ?>' alt='song' />
+                            <?php $songUrl = $song['song_pic_url'] === 'default' ? "uploads/images/songs/emptysong.jpg" : "uploads/images/songs/" . $song["song_pic_url"] ?>
+                            <img src='<?= $songUrl ?>' alt='song' />
                             <span><?= htmlspecialchars($song['song_name']) ?></span>
                             <label class="delete"><i class="bi bi-trash"></i></label>
                             <div class="play-button">
@@ -108,8 +109,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="square-cards">
                 <?php if (!empty($albums)): ?>
                     <?php foreach ($albums as $album): ?>
+                        <?php $albumUrl = $album['album_pic_url'] === 'default' ? "uploads/images/albums/emptyalbum.jpg" : "uploads/images/albums/" . $album["album_pic_url"] ?>
                         <a href="my-album.php?album=<?= $album['album_id'] ?>" class="card">
-                            <img src='uploads/images/albums/<?= htmlspecialchars($album['album_pic_url']) ?>' alt='album' />
+                            <img src="<?= $albumUrl ?>" alt='album' />
                             <span><?= htmlspecialchars($album['album_name']) ?></span>
                         </a>
                     <?php endforeach; ?>
@@ -123,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="modal upload">
             <i class="bi bi-x-lg close-modal" onclick="toggleModal()"></i>
             <form action="uploadsong.php" method="POST" enctype="multipart/form-data" name="song_form" onsubmit="return validateForm()">
-                <?php $defaulturl = "uploads/images/songs/emptysong.jpeg" ?>
+                <?php $defaulturl = "uploads/images/songs/emptysong.jpg" ?>
                 <img src='<?= $defaulturl ?>' alt="upload-pic" id="image_preview" class="rad15">
                 <input type="file" name="song_image_upload" accept="image/*" id="song_image_upload" onchange="changeImage(event)">
                 <label for="song_image_upload">Change Image</label>
@@ -146,7 +148,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="modal upload">
             <i class="bi bi-x-lg close-modal" onclick="toggleModal2()"></i>
             <form action="uploadalbum.php" method="POST" enctype="multipart/form-data" name="song_form" onsubmit="return validateForm2()">
-                <?php $defaulturl = "uploads/images/album/emptyalbum.jpeg" ?>
+                <?php $defaulturl = "uploads/images/albums/emptyalbum.jpg" ?>
                 <img src='<?= $defaulturl ?>' alt="upload-pic" id="image_preview2" class="rad15">
                 <input type="file" name="album_image_upload" accept="image/*" id="album_image_upload" onchange="changeImage2(event)">
                 <label for="album_image_upload">Change Image</label>

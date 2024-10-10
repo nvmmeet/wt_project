@@ -194,18 +194,17 @@
 }
 
 .song-card-dropdown .dropdown-item:hover {
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: #101010;
 }
 
 .sub-dropdown-content {
   display: none;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: #101010;
   border-radius: 8px;
 }
 
 .sub-dropdown:hover .sub-dropdown-content {
   display: flex;
-  flex-direction: column-reverse;
   position: absolute;
   right: 15px;
   top: -100%;

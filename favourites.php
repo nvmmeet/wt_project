@@ -72,9 +72,6 @@ $username = $_SESSION["username"];
                   <input type='checkbox' id='dropdown" . $song['song_id'] . "'/>
                   <label for='dropdown" . $song['song_id'] . "'><i class='bi bi-three-dots-vertical'></i></label>
                   <div class='song-card-dropdown'>
-                    <div class='dropdown-item'>
-                  <a href='removefromfav.php?song=" . $song['song_id'] . "'>Unfavourite it!</a>
-                    </div>
 
                     <div class='dropdown-item sub-dropdown hov'>
                       Add to Playlist
@@ -101,6 +98,9 @@ $username = $_SESSION["username"];
 
                 echo "
                       </div>
+                    </div>
+                    <div class='dropdown-item'>
+                  <a href='removefromfav.php?song=" . $song['song_id'] . "'>Unfavourite it!</a>
                     </div>
                   </div>
                 </div>";
