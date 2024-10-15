@@ -78,7 +78,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <?php $songUrl = $song['song_pic_url'] === 'default' ? "uploads/images/songs/emptysong.jpg" : "uploads/images/songs/" . $song["song_pic_url"] ?>
                             <img src='<?= $songUrl ?>' alt='song' />
                             <span><?= htmlspecialchars($song['song_name']) ?></span>
-                            <label class="delete"><i class="bi bi-trash"></i></label>
+                            <form method="post" action="delete_song.php">
+                                <input type="hidden" name="song_id" value="<?= htmlspecialchars($song['song_id']) ?>" />
+                                <button type="submit" class="delete" name="delete_song" onclick="return confirm('Delete <?= $song['song_name'] ?>?');"><i class="bi bi-trash"></i></button>
+                            </form>
                             <div class="play-button">
                                 <i class="bi bi-caret-right"></i>
                             </div>

@@ -2,6 +2,7 @@
 session_start();
 
 include "includes/config.php";
+include "includes/sessions/false.php";
 
 if (isset($_POST['delete_album'])) {
     $albumId = intval($_POST['album_id']);
@@ -29,7 +30,7 @@ if (isset($_POST['delete_album'])) {
 
         $pdo->commit();
 
-        header("Location: albums.php");
+        echo '<script>window.history.go(-2);</script>';
         exit();
     } catch (Exception $e) {
         $pdo->rollBack();

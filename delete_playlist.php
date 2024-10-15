@@ -2,6 +2,7 @@
 session_start();
 
 include "includes/config.php";
+include "includes/sessions/false.php";
 
 if (isset($_POST['delete_playlist'])) {
     $playlistId = intval($_POST['playlist_id']);
@@ -17,7 +18,7 @@ if (isset($_POST['delete_playlist'])) {
 
         $pdo->commit();
 
-        header("Location: playlists.php");
+        echo '<script>window.history.go(-2);</script>';
         exit();
     } catch (Exception $e) {
         $pdo->rollBack();
