@@ -17,6 +17,7 @@ $albumQuery = $pdo->prepare("
         s.song_id,
         s.song_name,
         s.song_pic_url,
+        s.song_url,
         u.name AS artist_name
     FROM 
         albums a
@@ -74,6 +75,7 @@ $playlists = $playlistQuery->fetchAll();
                     <img src="<?= $url ?>" alt="Album Cover" style="border-radius: 20px;" />
                     <h2><?= htmlspecialchars($album['album_name']) ?></h2>
                     <div class="actions">
+                        </form>
                         <button type="submit" class="main-play-button" name="play_album" onclick="playAlbum(<?= htmlspecialchars($album['album_id']) ?>)"><i class="bi bi-caret-right-fill"></i></button>
                     </div>
                 </div>
@@ -90,7 +92,11 @@ $playlists = $playlistQuery->fetchAll();
                                 <img src='<?= $songImage ?>' alt='song' />
                                 <span><?= htmlspecialchars($song['song_name']) ?></span>
                                 <p><?= htmlspecialchars($song['artist_name']) ?></p>
-                                <div class='play-button'>
+                                <div class='play-button' onclick="playSongFromCard(this)"
+                                    data-song-id="<?= $song['song_id'] ?>"
+                                    data-song-name="<?= htmlspecialchars($song['song_name']) ?>"
+                                    data-song-image="<?= $songImage ?>"
+                                    data-song-url="uploads/songs/<?= $song['song_url'] ?>">
                                     <i class='bi bi-caret-right-fill'></i>
                                 </div>
                                 <input type='checkbox' id='dropdown<?= $song['song_id'] ?>' />
@@ -120,8 +126,10 @@ $playlists = $playlistQuery->fetchAll();
                 </div>
             </section>
         <?php endif; ?>
+        <?php include "song.php" ?>
     </main>
     <?php include "includes/searchbar.php" ?>
+    <script src="js/song.js"></script>
 </body>
 
 </html>

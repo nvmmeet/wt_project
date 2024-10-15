@@ -149,6 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
         </div>
     </div>
+    <script src="js/song.js"></script>
     <script>
         function toggleModal() {
             let modalBg = document.querySelector(".modal-bg");
