@@ -4,13 +4,11 @@ include "includes/config.php";
 
 $username = $_SESSION["username"];
 
-// Get the user ID of the currently logged-in user
 $userQuery = $pdo->prepare("SELECT user_id FROM users WHERE username = :username");
 $userQuery->execute(['username' => $username]);
 $user = $userQuery->fetch();
 $user_id = $user['user_id'];
 
-// Fetch the artists followed by the user
 $followedArtistsQuery = $pdo->prepare("
   SELECT DISTINCT u.user_id, u.name, u.profile_pic_url 
   FROM social s

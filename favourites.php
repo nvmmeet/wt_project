@@ -26,7 +26,6 @@ $username = $_SESSION["username"];
       <div class="song-cards">
         <?php
         try {
-          // Fetch user_id for the logged-in user
           $userQuery = $pdo->prepare("SELECT user_id FROM users WHERE username = :username");
           $userQuery->execute(['username' => $username]);
           $user = $userQuery->fetch();
@@ -34,7 +33,6 @@ $username = $_SESSION["username"];
           if ($user) {
             $user_id = $user['user_id'];
 
-            // Fetch user's favourite songs
             $favSongQuery = $pdo->prepare("
               SELECT s.song_id, s.song_name, s.song_pic_url, u.name AS artist_name
               FROM fav_songs fs
@@ -45,22 +43,18 @@ $username = $_SESSION["username"];
             $favSongQuery->execute(['user_id' => $user_id]);
             $songs = $favSongQuery->fetchAll();
 
-            // Fetch user's playlists
             $playlistQuery = $pdo->prepare("SELECT playlist_id, playlist_name FROM playlists WHERE user_id = :user_id");
             $playlistQuery->execute(['user_id' => $user_id]);
             $playlists = $playlistQuery->fetchAll();
 
             if (count($songs) > 0) {
               foreach ($songs as $song) {
-                // Check if song is already in favorites (always true here because it's the favorites page)
                 $isInFavourites = true;
 
-                // Determine image URL
                 $image = $song['song_pic_url'] !== 'default'
                   ? 'uploads/images/songs/' . htmlspecialchars($song['song_pic_url'])
                   : 'uploads/images/songs/emptysong.jpg';
 
-                // Render song card
                 echo "
                 <div class='song-card'>
                   <img src='" . $image . "' alt='song' />
@@ -77,10 +71,8 @@ $username = $_SESSION["username"];
                       Add to Playlist
                       <div class='sub-dropdown-content'>";
 
-                // Render playlist options
                 if (count($playlists) > 0) {
                   foreach ($playlists as $playlist) {
-                    // Check if song is already in the playlist
                     $inPlaylistQuery = $pdo->prepare("SELECT 1 FROM playlist_songs WHERE playlist_id = :playlist_id AND song_id = :song_id");
                     $inPlaylistQuery->execute(['playlist_id' => $playlist['playlist_id'], 'song_id' => $song['song_id']]);
                     $isInPlaylist = $inPlaylistQuery->fetch();

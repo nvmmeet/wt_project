@@ -9,7 +9,6 @@ if (!$playlist_id) {
     $error = "Bad Request!";
 }
 
-// Fetch playlist and song details
 $playlistQuery = $pdo->prepare("
     SELECT 
         p.playlist_id,
@@ -42,7 +41,6 @@ if (empty($playlistData)) {
     $playlist = reset($playlistData);
 }
 
-// Fetch user's playlists for other features (if needed)
 $playlistOptionsQuery = $pdo->prepare("
     SELECT playlist_id, playlist_name 
     FROM playlists 
@@ -79,8 +77,11 @@ $playlists = $playlistOptionsQuery->fetchAll();
                     <img src="<?= $playlistUrl ?>" alt="Playlist Cover" style="border-radius: 20px;" />
                     <h2><?= htmlspecialchars($playlist['playlist_name']) ?></h2>
                     <div class="actions">
-                        <div class="delete"><i class="bi bi-trash"></i></div>
-                        <div class="main-play-button"><i class="bi bi-caret-right"></i></div>
+                        <form method="post" action="delete_playlist.php">
+                            <input type="hidden" name="playlist_id" value="<?= htmlspecialchars($playlist['playlist_id']) ?>" />
+                            <button type="submit" class="delete" name="delete_playlist" onclick="return confirm('Are you sure you want to delete this album and all associated songs?');"><i class="bi bi-trash"></i></button>
+                        </form>
+                        <button type="submit" class="main-play-button" name="play_album" onclick="playPlaylist(<?= htmlspecialchars($playlist['playlist_id']) ?>)"><i class="bi bi-caret-right-fill"></i></button>
                     </div>
                 </div>
 

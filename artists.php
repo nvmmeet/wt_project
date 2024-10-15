@@ -29,20 +29,25 @@ $username = $_SESSION["username"];
         try {
           $artistQuery = $pdo->prepare("SELECT user_id,username,name,profile_pic_url FROM users");
           $artistQuery->execute();
+          $artists = $artistQuery->fetchAll();
 
-          foreach ($artistQuery as $artist) {
-            if ($username !== $artist["username"]) {
-              $image = $artist["profile_pic_url"] !== 'default'
-                ? 'uploads/images/users/' . $artist['profile_pic_url']
-                : 'uploads/images/users/emptyuser.jpg';
+          if (count($artists) > 1) {
+            foreach ($artists as $artist) {
+              if ($username !== $artist["username"]) {
+                $image = $artist["profile_pic_url"] !== 'default'
+                  ? 'uploads/images/users/' . $artist['profile_pic_url']
+                  : 'uploads/images/users/emptyuser.jpg';
 
-              echo "
-                <a href='artist.php?artist=" . $artist['user_id'] . "' class='card'>
-              <img src='" . $image . "' alt='artist' />
-              <span>{$artist['name']}</span>
-              </a>
+                echo "
+      <a href='artist.php?artist=" . $artist['user_id'] . "' class='card'>
+      <img src='" . $image . "' alt='artist' />
+      <span>{$artist['name']}</span>
+      </a>
               ";
+              }
             }
+          } else {
+            include "includes/nothing.php";
           }
         } catch (PDOException $e) {
           echo "Error: " . $e->getMessage();

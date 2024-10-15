@@ -45,9 +45,11 @@ section {
 }
 
 .nothing {
-  max-width: 100%;
-  width: 100%;
-  background: red;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 20px;
+  height: 150px;
+  color: white;
+  width: 25rem;
 }
 
 .breadcrumb {
@@ -116,8 +118,11 @@ section {
 .breadcrumb-dropdown .dropdown-item.del:hover {
   background: rgba(255, 0, 0, 0.1);
 }
-.breadcrumb-dropdown .dropdown-item.del a {
+.breadcrumb-dropdown .dropdown-item.del button {
+  width: 100%;
   color: red;
+  background: transparent;
+  border: none;
 }
 
 .section-upper {
@@ -189,7 +194,7 @@ section {
   bottom: 5%;
 }
 
-.album-header .actions div {
+.album-header .actions button {
   height: 40px;
   width: 40px;
   border-radius: 100%;
@@ -199,17 +204,18 @@ section {
   transition: all 0.3s ease;
   cursor: pointer;
   position: relative;
+  border: none;
 }
 
-.album-header .actions div:active {
+.album-header .actions button:active {
   scale: 0.9;
 }
 
-.album-header .actions div.main-play-button {
+.album-header .actions button.main-play-button {
   background: dodgerblue;
 }
 
-.album-header .actions div.delete {
+.album-header .actions button.delete {
   background: rgb(255, 69, 69);
 }
 

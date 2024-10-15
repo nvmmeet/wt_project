@@ -4,27 +4,24 @@ include "includes/config.php";
 
 $loggedInUsername = $_SESSION['username'];
 $user_id = intval($_GET['artist']);
-$error = ''; // Initialize error variable
+$error = '';
 
 if (!$user_id) {
     $error = "Bad Request!";
 } else {
-    // Query to fetch logged-in user's ID based on username
     $loggedInUserQuery = $pdo->prepare("SELECT user_id FROM users WHERE username = :username");
     $loggedInUserQuery->execute(['username' => $loggedInUsername]);
     $loggedInUser = $loggedInUserQuery->fetch(PDO::FETCH_ASSOC);
 
-    // Check if logged-in user exists
     if (!$loggedInUser) {
         $error = "User Not Found!";
     } else {
-        $loggedInUserId = $loggedInUser['user_id']; // Get logged-in user's ID
+        $loggedInUserId = $loggedInUser['user_id'];
 
         $isFollowed = $pdo->prepare("SELECT * FROM social WHERE followed_id = :artist_id AND following_id = :user_id");
         $isFollowed->execute(["artist_id" => $user_id, "user_id" => $loggedInUserId]);
         $iffollow = $isFollowed->fetch();
 
-        // Query to fetch artist details
         $artistPageQuery = $pdo->prepare("
             SELECT 
                 u.user_id,
@@ -52,19 +49,16 @@ if (!$user_id) {
         $artistPageQuery->execute(["user_id" => $user_id]);
         $results = $artistPageQuery->fetchAll(PDO::FETCH_ASSOC);
 
-        // Check if artist exists
         if (empty($results)) {
             $error = "User Not Found!";
         } else {
             $artist = reset($results);
 
-            // Redirect if user_id matches the logged-in user ID
             if ($artist['user_id'] === $loggedInUserId) {
                 header("Location: profile.php");
-                exit(); // Ensure no further code is executed after the redirect
+                exit();
             }
 
-            // Count followers and following
             $followerQuery = $pdo->prepare("SELECT COUNT(*) as count FROM social WHERE followed_id = :user_id");
             $followerQuery->execute(['user_id' => $user_id]);
             $followerCount = $followerQuery->fetchColumn();
@@ -73,7 +67,6 @@ if (!$user_id) {
             $followingQuery->execute(['user_id' => $user_id]);
             $followingCount = $followingQuery->fetchColumn();
 
-            // Fetch the liked songs for the logged-in user
             $favoritesQuery = $pdo->prepare("
                 SELECT song_id FROM fav_songs 
                 WHERE user_id = (SELECT user_id FROM users WHERE username = :username)
@@ -81,7 +74,6 @@ if (!$user_id) {
             $favoritesQuery->execute(['username' => $loggedInUsername]);
             $likedSongs = $favoritesQuery->fetchAll(PDO::FETCH_COLUMN, 0);
 
-            // Fetch user's playlists
             $playlistsQuery = $pdo->prepare("
                 SELECT playlist_id, playlist_name 
                 FROM playlists 
@@ -90,7 +82,6 @@ if (!$user_id) {
             $playlistsQuery->execute(['loggedInUserId' => $loggedInUserId]);
             $playlists = $playlistsQuery->fetchAll(PDO::FETCH_ASSOC);
 
-            // Fetch all songs by the artist
             $allSongsQuery = $pdo->prepare("
                 SELECT s.song_id, s.song_name, s.song_pic_url 
                 FROM songs s 
@@ -119,7 +110,7 @@ if (!$user_id) {
 <body>
     <?php include "includes/sidebar.php"; ?>
     <main>
-        <h1 class="breadcrumb"><?= htmlspecialchars($error) ?: 'Artist Profile' ?></h1> <!-- Show error or default heading -->
+        <h1 class="breadcrumb"><?= htmlspecialchars($error) ?: 'Artist Profile' ?></h1>
         <?php if (!$error): ?>
             <section>
                 <div class="profile-main">
@@ -188,7 +179,7 @@ if (!$user_id) {
                     <h2>Songs</h2>
                 </div>
                 <div class="song-cards">
-                    <?php  // Fetch and display songs not in albums
+                    <?php
                     foreach ($allSongs as $song) {
                         $isLiked = in_array($song['song_id'], $likedSongs);
                         $songImage = $song['song_pic_url'] !== 'default' ? 'uploads/images/songs/' . htmlspecialchars($song['song_pic_url']) : 'uploads/images/songs/emptysong.jpg';

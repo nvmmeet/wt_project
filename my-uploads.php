@@ -3,7 +3,6 @@ include "includes/sessions/false.php";
 include "includes/config.php";
 $username = $_SESSION['username'];
 
-// Fetch uploaded songs and albums by the user
 $songsQuery = $pdo->prepare("
     SELECT song_id, song_name, song_pic_url 
     FROM songs 
@@ -20,7 +19,6 @@ $albumsQuery = $pdo->prepare("
 $albumsQuery->execute(['username' => $username]);
 $albums = $albumsQuery->fetchAll();
 
-// Handle the form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $errors = [];
 
@@ -32,16 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = 'Please provide a song name.';
     }
 
-    // If no album is selected, the value will be 'none'
     $song_album = $_POST['song_album'] !== 'none' ? $_POST['song_album'] : null;
-
-    if (empty($errors)) {
-        // Process the uploaded files and store them in the database
-
-        // Assuming you have validation for the uploaded files here
-
-        // Redirect or output success message
-    }
 }
 ?>
 
@@ -96,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                     <?php endforeach; ?>
                 <?php else: ?>
-                    <p>No songs uploaded yet.</p>
+                    <?php include "includes/nothing.php" ?>
                 <?php endif; ?>
             </div>
 
@@ -116,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </a>
                     <?php endforeach; ?>
                 <?php else: ?>
-                    <p>No albums uploaded yet.</p>
+                    <?php include "includes/nothing.php" ?>
                 <?php endif; ?>
             </div>
         </section>

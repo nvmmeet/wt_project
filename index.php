@@ -4,28 +4,23 @@ include "includes/config.php";
 
 $username = $_SESSION["username"];
 
-// Fetch user information
 $userQuery = $pdo->prepare("SELECT user_id FROM users WHERE username = :username");
 $userQuery->execute(['username' => $username]);
 $user = $userQuery->fetch();
 $user_id = $user['user_id'];
 
-// Fetch albums excluding those created by the logged-in user
 $albumsQuery = $pdo->prepare("SELECT album_id, album_name, album_pic_url FROM albums WHERE user_id != :user_id LIMIT 4");
 $albumsQuery->execute(['user_id' => $user_id]);
 $albums = $albumsQuery->fetchAll();
 
-// Fetch artists excluding the logged-in user
 $artistsQuery = $pdo->prepare("SELECT user_id, name, profile_pic_url FROM users WHERE user_id != :user_id LIMIT 5");
 $artistsQuery->execute(['user_id' => $user_id]);
 $artists = $artistsQuery->fetchAll();
 
-// Fetch random songs excluding those uploaded by the logged-in user
 $randomSongsQuery = $pdo->prepare("SELECT song_id, song_name, song_pic_url, user_id FROM songs WHERE user_id != :user_id ORDER BY RAND() LIMIT 5");
 $randomSongsQuery->execute(['user_id' => $user_id]);
 $randomSongs = $randomSongsQuery->fetchAll();
 
-// Fetch playlists for the logged-in user
 $playlistsQuery = $pdo->prepare("SELECT playlist_id, playlist_name FROM playlists WHERE user_id = :user_id");
 $playlistsQuery->execute(['user_id' => $user_id]);
 $playlists = $playlistsQuery->fetchAll();
@@ -48,7 +43,6 @@ $playlists = $playlistsQuery->fetchAll();
   <main>
     <h1 class="breadcrumb">Home</h1>
 
-    <!-- Albums Section -->
     <section>
       <div class="section-upper">
         <h2>Albums</h2>
@@ -72,7 +66,6 @@ $playlists = $playlistsQuery->fetchAll();
       </div>
     </section>
 
-    <!-- Artists Section -->
     <section>
       <div class="section-upper">
         <h2>Artists</h2>
@@ -96,10 +89,9 @@ $playlists = $playlistsQuery->fetchAll();
       </div>
     </section>
 
-    <!-- Recently Played Songs Section -->
     <section>
       <div class="section-upper">
-        <h2>Recently Played</h2>
+        <h2>You Might Also Like </h2>
       </div>
       <div class="song-cards">
         <?php
@@ -110,12 +102,10 @@ $playlists = $playlistsQuery->fetchAll();
                 ? 'uploads/images/songs/' . $song['song_pic_url']
                 : 'uploads/images/songs/emptysong.jpg';
 
-              // Get the artist name
               $artistQuery = $pdo->prepare("SELECT username FROM users WHERE user_id = :user_id");
               $artistQuery->execute(['user_id' => $song['user_id']]);
               $artist = $artistQuery->fetch();
 
-              // Check if the song is in the user's favorites
               $favQuery = $pdo->prepare("SELECT 1 FROM fav_songs WHERE user_id = :user_id AND song_id = :song_id");
               $favQuery->execute(['user_id' => $user_id, 'song_id' => $song['song_id']]);
               $isInFavourites = $favQuery->fetch();
@@ -130,9 +120,7 @@ $playlists = $playlistsQuery->fetchAll();
                   </div>
                   <input type='checkbox' id='dropdown" . $song['song_id'] . "'/>
                   <label for='dropdown" . $song['song_id'] . "'><i class='bi bi-three-dots-vertical'></i></label>
-                  <div class='song-card-dropdown'>
-                    <!-- Add to Favourites or Remove from Favourites -->
-                  
+                  <div class='song-card-dropdown'>                  
 
                     <div class='dropdown-item sub-dropdown hov'>
                       Add to Playlist

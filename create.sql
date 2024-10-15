@@ -69,3 +69,10 @@ CREATE TABLE `admin` (
     `admin_username` VARCHAR(50) NOT NULL UNIQUE,
     `admin_password` VARCHAR(255) NOT NULL
 );
+
+ALTER TABLE fav_songs
+DROP FOREIGN KEY fav_songs_ibfk_1;
+
+ALTER TABLE fav_songs
+ADD CONSTRAINT fav_songs_ibfk_1
+FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE;

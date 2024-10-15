@@ -32,20 +32,25 @@ $albumUser = $userQuery->fetch();
         try {
           $albumsQuery = $pdo->prepare("SELECT * FROM albums");
           $albumsQuery->execute();
+          $albums = $albumsQuery->fetchAll();
+          if (count($albums) > 0) {
 
-          foreach ($albumsQuery as $album) {
-            if ($albumUser["user_id"] !== $album["user_id"]) {
-              $image = $album["album_pic_url"] !== 'default'
-                ? 'uploads/images/albums/' . $album['album_pic_url']
-                : 'uploads/images/albums/emptyalbum.jpg';
+            foreach ($albums as $album) {
+              if ($albumUser["user_id"] !== $album["user_id"]) {
+                $image = $album["album_pic_url"] !== 'default'
+                  ? 'uploads/images/albums/' . $album['album_pic_url']
+                  : 'uploads/images/albums/emptyalbum.jpg';
 
-              echo "
-              <a href='album.php?album=" . $album['album_id'] . "' class='card'>
-              <img src='" . $image . "' alt='album' />
-              <span>{$album['album_name']}</span>
-              </a>
-              ";
+                echo "
+                <a href='album.php?album=" . $album['album_id'] . "' class='card'>
+                <img src='" . $image . "' alt='album' />
+                <span>{$album['album_name']}</span>
+                </a>
+                ";
+              }
             }
+          } else {
+            include "includes/nothing.php";
           }
         } catch (PDOException $e) {
           echo "Error: " . $e->getMessage();

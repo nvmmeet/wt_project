@@ -18,15 +18,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $album_name = $_POST['album_name'];
     }
 
-    // Default image name
-    $album_pic_name = 'emptyalbum.jpeg';  // default image name
+    $album_pic_name = 'emptyalbum.jpg';
 
     if (!empty($_FILES['album_image_upload']['name'])) {
-        // Upload the image and get the filename
         $album_pic_name = uploadFile('album_image_upload', 'uploads/images/albums/', $errors);
 
-        // If the uploaded file is emptyalbum.jpeg, change it to 'default'
-        if ($album_pic_name === 'emptyalbum.jpeg') {
+        if ($album_pic_name === 'emptyalbum.jpg') {
             $album_pic_name = 'default';
         }
     }
@@ -38,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ");
         $albumInsertQuery->execute([
             'album_name' => $album_name,
-            'album_pic_name' => $album_pic_name,  // Store only the filename
+            'album_pic_name' => $album_pic_name,
             'user_id' => $user_id,
         ]);
 
@@ -62,7 +59,7 @@ function uploadFile($inputName, $uploadDir, &$errors)
     }
 
     if (move_uploaded_file($_FILES[$inputName]['tmp_name'], $targetFile)) {
-        return $fileName;  // Return the filename
+        return $fileName;
     } else {
         $errors[] = "There was an error uploading the file.";
         return null;

@@ -83,7 +83,10 @@ $favArtistCount = $favArtistQuery->fetch()['fav_artist_count'];
           <a href="changepassword.php">Change Password</a>
         </div>
         <div class="dropdown-item del">
-          <a href="deleteuser.php">Delete Account</a>
+          <form method="post" action="deleteuser.php">
+            <input type="hidden" name="user_id" value="<?= $user_id ?>" />
+            <button type="submit" name="delete_user" onclick="return confirm('Are you sure you want to delete this Account and associted Things?');">Delete Account</button>
+          </form>
         </div>
       </div>
     </h1>

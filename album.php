@@ -9,7 +9,6 @@ if (!$album_id) {
     $error = "Bad Request!";
 }
 
-// Fetch album and song details
 $albumQuery = $pdo->prepare("
     SELECT 
         a.album_id,
@@ -39,7 +38,6 @@ if (empty($albumData)) {
     $album = reset($albumData);
 }
 
-// Fetch user's playlists for the "Add to Playlist" feature
 $playlistQuery = $pdo->prepare("
     SELECT playlist_id, playlist_name 
     FROM playlists 
@@ -76,8 +74,11 @@ $playlists = $playlistQuery->fetchAll();
                     <img src="<?= $url ?>" alt="Album Cover" style="border-radius: 20px;" />
                     <h2><?= htmlspecialchars($album['album_name']) ?></h2>
                     <div class="actions">
-                        <div class="delete"><i class="bi bi-trash"></i></div>
-                        <div class="main-play-button"><i class="bi bi-caret-right"></i></div>
+                        <form method="post" action="delete_album.php">
+                            <input type="hidden" name="album_id" value="<?= htmlspecialchars($album['album_id']) ?>" />
+                            <button type="submit" class="delete" name="delete_album" onclick="return confirm('Are you sure you want to delete this album and all associated songs?');"><i class="bi bi-trash"></i></button>
+                        </form>
+                        <button type="submit" class="main-play-button" name="play_album" onclick="playAlbum(<?= htmlspecialchars($album['album_id']) ?>)"><i class="bi bi-caret-right-fill"></i></button>
                     </div>
                 </div>
 
@@ -103,7 +104,6 @@ $playlists = $playlistQuery->fetchAll();
                                         Add to Playlist
                                         <div class='sub-dropdown-content'>
                                             <?php foreach ($playlists as $playlist): ?>
-                                                <!-- Check if song is already in the playlist -->
                                                 <div class='dropdown-item'>
                                                     <a href='addtopl.php?song=<?= $song['song_id'] ?>&playlist=<?= $playlist['playlist_id'] ?>'>
                                                         <?= htmlspecialchars($playlist['playlist_name']) ?>
