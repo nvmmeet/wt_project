@@ -17,7 +17,7 @@ $artistsQuery = $pdo->prepare("SELECT user_id, name, profile_pic_url FROM users 
 $artistsQuery->execute(['user_id' => $user_id]);
 $artists = $artistsQuery->fetchAll();
 
-$randomSongsQuery = $pdo->prepare("SELECT song_id, song_name, song_pic_url, user_id FROM songs WHERE user_id != :user_id ORDER BY RAND() LIMIT 5");
+$randomSongsQuery = $pdo->prepare("SELECT song_id, song_name, song_pic_url,song_url, user_id FROM songs WHERE user_id != :user_id ORDER BY RAND() LIMIT 5");
 $randomSongsQuery->execute(['user_id' => $user_id]);
 $randomSongs = $randomSongsQuery->fetchAll();
 
@@ -111,20 +111,26 @@ $playlists = $playlistsQuery->fetchAll();
               $isInFavourites = $favQuery->fetch();
 
               echo "
-                <div class='song-card'>
-                  <img src='" . $songImage . "' alt='" . htmlspecialchars($song['song_name']) . "-card' />
-                  <span>" . htmlspecialchars($song['song_name']) . "</span>
-                  <p>" . htmlspecialchars($artist['username']) . "</p>
-                  <div class='play-button'>
-                    <i class='bi bi-caret-right-fill'></i>
-                  </div>
-                  <input type='checkbox' id='dropdown" . $song['song_id'] . "'/>
-                  <label for='dropdown" . $song['song_id'] . "'><i class='bi bi-three-dots-vertical'></i></label>
-                  <div class='song-card-dropdown'>                  
+  <div class='song-card'>
+    <img src='" . $songImage . "' alt='" . htmlspecialchars($song['song_name']) . "-card' />
+    <span>" . htmlspecialchars($song['song_name']) . "</span>
+    <p>" . htmlspecialchars($artist['username']) . "</p>
+    <div class='play-button' onclick='playSongFromCard(this)'
+                          data-song-id='" . $song['song_id'] . "'
+                          data-song-name='" . htmlspecialchars($song['song_name']) . "'
+                          data-song-image='" . $songImage . "'
+                          data-artist-name='" . htmlspecialchars($artist['username']) . "'
+                          data-song-url='uploads/songs/" . $song['song_url'] . "'>
+        <i class='bi bi-caret-right-fill'></i>
+    </div>
+    <input type='checkbox' id='dropdown" . $song['song_id'] . "'/>
+    <label for='dropdown" . $song['song_id'] . "'><i class='bi bi-three-dots-vertical'></i></label>
+    <div class='song-card-dropdown'>                  
 
-                    <div class='dropdown-item sub-dropdown hov'>
-                      Add to Playlist
-                      <div class='sub-dropdown-content'>";
+      <div class='dropdown-item sub-dropdown hov'>
+        Add to Playlist
+        <div class='sub-dropdown-content'>";
+
 
               if (count($playlists) > 0) {
                 foreach ($playlists as $playlist) {
@@ -164,8 +170,10 @@ $playlists = $playlistsQuery->fetchAll();
       </div>
     </section>
   </main>
+  <?php include "song.php"; ?>
   <?php include "includes/searchbar.php"; ?>
   <script src="js/events.js"></script>
+  <script src="js/song.js"></script>
 </body>
 
 </html>

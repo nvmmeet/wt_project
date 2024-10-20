@@ -76,7 +76,7 @@ $playlists = $playlistQuery->fetchAll();
                     <h2><?= htmlspecialchars($album['album_name']) ?></h2>
                     <div class="actions">
                         </form>
-                        <button type="submit" class="main-play-button" name="play_album" onclick="playAlbum(<?= htmlspecialchars($album['album_id']) ?>)"><i class="bi bi-caret-right-fill"></i></button>
+                        <button type="submit" class="main-play-button play-button" data-album-id="<?= htmlspecialchars($album['album_id']) ?>" onclick="playAlbum(<?= htmlspecialchars($album['album_id']) ?>)"><i class="bi bi-caret-right-fill"></i></button>
                     </div>
                 </div>
 
@@ -96,6 +96,7 @@ $playlists = $playlistQuery->fetchAll();
                                     data-song-id="<?= $song['song_id'] ?>"
                                     data-song-name="<?= htmlspecialchars($song['song_name']) ?>"
                                     data-song-image="<?= $songImage ?>"
+                                    data-artist-name="<?= htmlspecialchars($song['artist_name']) ?>"
                                     data-song-url="uploads/songs/<?= $song['song_url'] ?>">
                                     <i class='bi bi-caret-right-fill'></i>
                                 </div>
@@ -126,8 +127,8 @@ $playlists = $playlistQuery->fetchAll();
                 </div>
             </section>
         <?php endif; ?>
-        <?php include "song.php" ?>
     </main>
+    <?php include "song.php" ?>
     <?php include "includes/searchbar.php" ?>
     <script src="js/song.js"></script>
 </body>

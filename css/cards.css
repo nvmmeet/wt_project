@@ -208,9 +208,10 @@
 
 .sub-dropdown:hover .sub-dropdown-content {
   display: flex;
+  flex-direction: column;
   position: absolute;
-  right: 15px;
-  top: -100%;
+  right: -15px;
+  top: 0;
 }
 
 .song-card input:checked + label + .song-card-dropdown {

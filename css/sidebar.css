@@ -211,6 +211,7 @@ aside.search-sidebar {
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
+.search-result .side-song,
 .search-result a {
   text-decoration: none;
   color: lightgray;

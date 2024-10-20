@@ -83,7 +83,7 @@ if (!$user_id) {
             $playlists = $playlistsQuery->fetchAll(PDO::FETCH_ASSOC);
 
             $allSongsQuery = $pdo->prepare("
-                SELECT s.song_id, s.song_name, s.song_pic_url 
+                SELECT s.song_id, s.song_name, s.song_pic_url ,s.song_url
                 FROM songs s 
                 WHERE s.user_id = :user_id
             ");
@@ -189,9 +189,14 @@ if (!$user_id) {
                             <img src='" . htmlspecialchars($songImage) . "' alt='song' />
                             <span>" . htmlspecialchars($song['song_name']) . "</span>
                             <p>" . htmlspecialchars($artist['username']) . "</p>
-                            <div class='play-button'>
-                                <i class='bi bi-caret-right-fill'></i>
-                            </div>
+                   <div class='play-button' onclick='playSongFromCard(this)'
+                          data-song-id='" . $song['song_id'] . "'
+                          data-song-name='" . htmlspecialchars($song['song_name']) . "'
+                          data-song-image='" . $songImage . "'
+                          data-artist-name='" . htmlspecialchars($artist['username']) . "'
+                          data-song-url='uploads/songs/" . $song['song_url'] . "'>
+        <i class='bi bi-caret-right-fill'></i>
+    </div>
                             <input type='checkbox' id='dropdown" . htmlspecialchars($song['song_id']) . "'/>
                             <label for='dropdown" . htmlspecialchars($song['song_id']) . "'><i class='bi bi-three-dots-vertical'></i></label>
                             <div class='song-card-dropdown'>
@@ -227,7 +232,9 @@ if (!$user_id) {
             </section>
         <?php endif; ?>
     </main>
+    <?php include "song.php" ?>
     <?php include "includes/searchbar.php" ?>
+    <script src="js/song.js"></script>
 </body>
 
 </html>

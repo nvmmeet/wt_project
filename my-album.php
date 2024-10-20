@@ -17,6 +17,7 @@ $albumQuery = $pdo->prepare("
         s.song_id,
         s.song_name,
         s.song_pic_url,
+        s.song_url,
         u.name AS artist_name
     FROM 
         albums a
@@ -78,7 +79,8 @@ $playlists = $playlistQuery->fetchAll();
                             <input type="hidden" name="album_id" value="<?= htmlspecialchars($album['album_id']) ?>" />
                             <button type="submit" class="delete" name="delete_album" onclick="return confirm('Are you sure you want to delete this album and all associated songs?');"><i class="bi bi-trash"></i></button>
                         </form>
-                        <button type="submit" class="main-play-button" name="play_album" onclick="playAlbum(<?= htmlspecialchars($album['album_id']) ?>)"><i class="bi bi-caret-right-fill"></i></button>
+                        <button type="submit" class="main-play-button play-button" data-album-id="<?= htmlspecialchars($album['album_id']) ?>" onclick="playAlbum(<?= htmlspecialchars($album['album_id']) ?>)"><i class="bi bi-caret-right-fill"></i></button>
+
                     </div>
                 </div>
 
@@ -94,7 +96,12 @@ $playlists = $playlistQuery->fetchAll();
                                 <img src='<?= $songImage ?>' alt='song' />
                                 <span><?= htmlspecialchars($song['song_name']) ?></span>
                                 <p><?= htmlspecialchars($song['artist_name']) ?></p>
-                                <div class='play-button'>
+                                <div class='play-button' onclick="playSongFromCard(this)"
+                                    data-song-id="<?= $song['song_id'] ?>"
+                                    data-song-name="<?= htmlspecialchars($song['song_name']) ?>"
+                                    data-song-image="<?= $songImage ?>"
+                                    data-artist-name="<?= htmlspecialchars($song['artist_name']) ?>"
+                                    data-song-url="uploads/songs/<?= $song['song_url'] ?>">
                                     <i class='bi bi-caret-right-fill'></i>
                                 </div>
                                 <input type='checkbox' id='dropdown<?= $song['song_id'] ?>' />
@@ -125,7 +132,9 @@ $playlists = $playlistQuery->fetchAll();
             </section>
         <?php endif; ?>
     </main>
+    <?php include "song.php" ?>
     <?php include "includes/searchbar.php" ?>
+    <script src="js/song.js"></script>
 </body>
 
 </html>

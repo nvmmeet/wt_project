@@ -26,31 +26,7 @@ function fetchSearchResults(query) {
 function displayResults(data) {
   const searchResultsContainer = document.getElementById("search-results");
   searchResultsContainer.innerHTML = "";
-
-  if (data.songs.length > 0) {
-    const songsSection = document.createElement("div");
-    const songsHeading = document.createElement("h3");
-    songsHeading.textContent = "Songs";
-    songsSection.appendChild(songsHeading);
-
-    data.songs.forEach((song) => {
-      const songElement = document.createElement("div");
-      songElement.className = "search-result";
-      songImage =
-        song.song_pic_url === "default"
-          ? "emptysong.jpg"
-          : `${song.song_pic_url}`;
-      songElement.innerHTML = `
-            <a href="song.php?song=${song.song_id}" >
-                    <div><img src="uploads/images/songs/${songImage}" alt="search-song" /></div>
-                    <div><span>${song.song_name}</span><p>${song.username}</p></div>
-                </a>`;
-      songsSection.appendChild(songElement);
-    });
-
-    searchResultsContainer.appendChild(songsSection);
-  }
-
+  
   if (data.albums.length > 0) {
     const albumsSection = document.createElement("div");
     const albumsHeading = document.createElement("h3");

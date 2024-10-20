@@ -4,7 +4,7 @@ include "includes/config.php";
 $username = $_SESSION['username'];
 
 $songsQuery = $pdo->prepare("
-    SELECT song_id, song_name, song_pic_url 
+    SELECT song_id, song_name, song_pic_url ,song_url
     FROM songs 
     WHERE user_id = (SELECT user_id FROM users WHERE username = :username)
 ");
@@ -82,8 +82,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <input type="hidden" name="song_id" value="<?= htmlspecialchars($song['song_id']) ?>" />
                                 <button type="submit" class="delete" name="delete_song" onclick="return confirm('Delete <?= $song['song_name'] ?>?');"><i class="bi bi-trash"></i></button>
                             </form>
-                            <div class="play-button">
-                                <i class="bi bi-caret-right"></i>
+                            <div class='play-button' onclick="playSongFromCard(this)"
+                                data-song-id="<?= $song['song_id'] ?>"
+                                data-song-name="<?= htmlspecialchars($song['song_name']) ?>"
+                                data-song-image="<?= $songUrl ?>"
+                                data-song-url="uploads/songs/<?= $song['song_url'] ?>">
+                                <i class='bi bi-caret-right-fill'></i>
                             </div>
                         </div>
                     <?php endforeach; ?>
@@ -113,6 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </section>
     </main>
+    <?php include "song.php" ?>
     <div class="modal-bg" id="modal-bg">
         <div class="modal upload">
             <i class="bi bi-x-lg close-modal" onclick="toggleModal()"></i>
