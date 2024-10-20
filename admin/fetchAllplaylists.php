@@ -50,7 +50,7 @@ $playlists = $playlistQuery->fetchAll(PDO::FETCH_ASSOC);
                 <?php foreach ($playlists as $playlist): ?>
                     <tr>
                         <td>
-                            <img src="../uploads/images/playlists/<?= htmlspecialchars($playlist['playlist_pic_url']) ?>" alt="Playlist Image" style="width: 50px; height: 50px; border-radius: 50%;" />
+                            <img src="../uploads/images/playlists/<?= $playlist['playlist_pic_url'] === "default" ? "emptyplaylist.jpg" : $playlist['playlist_pic_url'] ?>" alt="Playlist Image" style="width: 50px; height: 50px; border-radius: 50%;" />
                         </td>
                         <td><?= htmlspecialchars($playlist['playlist_id']) ?></td>
                         <td><?= htmlspecialchars($playlist['playlist_name']) ?></td>

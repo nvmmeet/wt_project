@@ -116,7 +116,7 @@ $username = $_SESSION["username"];
     </section>
   </main>
   <?php include "song.php" ?>
-  <?php include "includes/searchbar.php" ?>
+  <?php include "includes/sear  chbar.php" ?>
   <script src="js/events.js"></script>
   <script src="js/load.js"></script>
   <script src="js/song.js"></script>
