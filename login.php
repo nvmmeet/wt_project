@@ -49,12 +49,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <form action="login.php" method="post" onsubmit="return validateLogin(event);" name="login">
       <h1 class="form-heading">Login</h1>
       <div class="form-field">
-        <input type="text" placeholder="Username..." name="username" />
+        <input type="text" placeholder="Username..." name="username" autocomplete="off" />
         <i class="bi bi-person"></i>
       </div>
       <div class="form-field">
         <i class="bi bi-eye show-pass" onclick="showPass()"></i>
-        <input type="password" placeholder="password..." name="password" id="pass" />
+        <input type="password" placeholder="password..." name="password" id="pass" autocomplete="off" />
         <i class="bi bi-lock"></i>
       </div>
       <div class="error-field password"><?= $error ?? "" ?></div>

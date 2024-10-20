@@ -62,22 +62,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <form action="signup.php" method="post" onsubmit="return validateSignUp(event);" name="signup">
       <h1 class="form-heading">Sign Up</h1>
       <div class="form-field">
-        <input type="text" placeholder="Name..." name="nameof" />
+        <input type="text" placeholder="Name..." name="nameof" autocomplete="off" />
         <i class="bi bi-person"></i>
       </div>
       <div class="error-field name"></div>
       <div class="form-field">
-        <input type="date" name="dob" />
+        <input type="date" name="dob" autocomplete="off" />
         <i class="bi bi-calendar"></i>
       </div>
       <div class="form-field">
-        <input type="text" placeholder="Username..." name="username" />
+        <input type="text" placeholder="Username..." name="username" autocomplete="off" />
         <i class="bi bi-lock"></i>
       </div>
       <div class="error-field username"> <?= $usernameError ?? '' ?></div>
       <div class="form-field">
         <i class="bi bi-eye show-pass" onclick="showPass()"></i>
-        <input type="password" placeholder="Password..." name="password" id="pass" />
+        <input type="password" placeholder="Password..." name="password" id="pass" autocomplete="off" />
         <i class="bi bi-shield-check"></i>
       </div>
       <div class="error-field password"><?= $fieldError ?? '' ?></div>

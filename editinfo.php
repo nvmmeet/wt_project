@@ -48,11 +48,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <div class="form-container center">
     <form action="editinfo.php" method="post">
       <div class="form-field">
-        <input type="text" placeholder="Name..." name="newname" />
+        <input type="text" placeholder="Name..." name="newname" autocomplete="off" />
         <i class="bi bi-person"></i>
       </div>
       <div class="form-field">
-        <input type="date" name="newdob" />
+        <input type="date" name="newdob" autocomplete="off" />
         <i class="bi bi-calendar"></i>
       </div>
       <button type="submit">Edit</button>

@@ -47,13 +47,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <form action="changepassword.php" method="post" onsubmit="return validateChangePassword(event);" name="changepass">
             <div class="form-field">
                 <i class="bi bi-eye show-pass" onclick="showPass()"></i>
-                <input type="password" placeholder="Old Password..." name="oldpassword" id="pass" />
+                <input type="password" placeholder="Old Password..." name="oldpassword" id="pass" autocomplete="off" />
                 <i class="bi bi-lock"></i>
             </div>
             <div class="error-field"><?= $error ?></div>
             <div class="form-field">
                 <i class="bi bi-eye show-pass" onclick="showPass2()"></i>
-                <input type="password" placeholder="New Password..." name="newpassword" id="pass2" />
+                <input type="password" placeholder="New Password..." name="newpassword" id="pass2" autocomplete="off" />
                 <i class="bi bi-lock"></i>
             </div>
             <div class="error-field password"><?= $error2 ?? "" ?></div>
