@@ -12,6 +12,7 @@ CREATE TABLE `songs` (
     `song_name` VARCHAR(255) NOT NULL,
     `user_id` BIGINT UNSIGNED NOT NULL,
     `song_pic_url` VARCHAR(255) NOT NULL,
+    `song_url` VARCHAR(255) NOT NULL,
     FOREIGN KEY (`user_id`) REFERENCES `users`(`user_id`)
 );
 
